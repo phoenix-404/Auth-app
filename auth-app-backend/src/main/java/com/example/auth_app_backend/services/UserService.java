@@ -2,6 +2,8 @@ package com.example.auth_app_backend.services;
 
 import com.example.auth_app_backend.dtos.UserDTO;
 
+import java.util.UUID;
+
 public interface UserService {
     //Create User
     UserDTO createUser(UserDTO userDTO);
@@ -10,13 +12,13 @@ public interface UserService {
     UserDTO getUserByEmail(String email);
 
     //Update User
-    UserDTO updateUser(UserDTO userDTO, String userId);
+    UserDTO updateUser(UserDTO userDTO, UUID userId);
 
     //Delete User
-    void deleteUser(String userId);
+    void deleteUser(UUID userId);
 
     //Get user by Id
-    UserDTO getUserById(String userId);
+    UserDTO getUserById(UUID userId);
 
     //Get all Users
     Iterable<UserDTO> getAllUsers();

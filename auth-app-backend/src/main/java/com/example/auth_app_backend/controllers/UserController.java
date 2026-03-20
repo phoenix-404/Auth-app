@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -30,5 +31,22 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    //get user by email
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable("email") String email){
+        return ResponseEntity.ok(userService.getUserByEmail(email));
+    }
+
+    //delete user
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable("userId")UUID userId){
+        userService.deleteUser(userId);
+    }
+
+    //Update User
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDTO> updatedUser(@RequestBody UserDTO userDTO, @PathVariable("userId") UUID userId){
+        return ResponseEntity.ok(userService.updateUser(userDTO,userId));
+    }
 
 }
