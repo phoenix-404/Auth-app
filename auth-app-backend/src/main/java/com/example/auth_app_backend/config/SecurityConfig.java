@@ -4,7 +4,9 @@ package com.example.auth_app_backend.config;
 import com.example.auth_app_backend.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -54,7 +56,7 @@ public class SecurityConfig {
                     // Manually build a JSON error response instead of redirecting to a login page
                     response.setStatus(401);
                     response.setContentType("application/json");
-                    String message = "Unauthorised Access! " + authException.getMessage();
+                    String message = authException.getMessage();
 
                     Map<String,String> errorMap = Map.of(
                             "Message", message,
@@ -80,6 +82,11 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration){
+        return configuration.getAuthenticationManager();
     }
 }
 
